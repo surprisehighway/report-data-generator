@@ -1,0 +1,17 @@
+{
+    "name": "justin/report-data-generator",
+    "authors": [
+        {
+            "name": "Justin Tallant",
+            "email": "jtallant07@gmail.com"
+        }
+    ],
+    "require": {
+    	"nesbot/carbon": "dev-master"
+    },
+	"autoload" : {
+		"psr-0" : {
+			"" : "src/"
+		}
+	}
+}
