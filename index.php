@@ -10,4 +10,10 @@ $config = [
 
 $generator = new DataGenerator($config);
 
-echo $generator->prettyPrint();
+# Pretty Print Json
+echo '<pre>';
+echo $generator->display(true);
+echo '</pre>';
+
+# Don't pretty print
+// echo $generator->display();

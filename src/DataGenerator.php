@@ -36,8 +36,12 @@ class DataGenerator {
         return date('Y-m-d', $timestamp);
     }
 
-    public function prettyPrint()
+    public function display($prettyPrint = false)
     {
-        return json_encode($this->generate(), JSON_PRETTY_PRINT);
+        if ($prettyPrint) {
+            return json_encode($this->generate(), JSON_PRETTY_PRINT);
+        }
+
+        return json_encode($this->generate());
     }
 }
