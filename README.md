@@ -8,7 +8,7 @@ Used to generate some json so we can create some D3 graphs.
 
 Note about composer:  
 You should install composer globally.  
-That way you can use it anywhere and we don't know need include the .phar in every project.
+That way you can use it anywhere and we don't need to include the .phar in every project.
 
 `/usr/local/bin` must be in your `$PATH` for this to work.
 
