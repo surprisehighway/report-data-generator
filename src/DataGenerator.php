@@ -1,7 +1,5 @@
 <?php
 
-use Carbon\Carbon;
-
 class DataGenerator {
 
     public $config;
@@ -16,7 +14,7 @@ class DataGenerator {
         $numEvents = $this->config['numberEvents'];
         $data = [];
         for ($i=1; $i < $numEvents + 1; $i++) { 
-            $event = new EventData;
+            $event = new stdClass;
             $event->id = $i;
             $event->date = $this->randomDate();
             $event->oldMembers = rand(0, 80);
@@ -30,8 +28,8 @@ class DataGenerator {
 
     public function randomDate()
     {
-        $start = new Carbon($this->config['start']);
-        $end = new Carbon($this->config['end']);
+        $start = new DateTime($this->config['start']);
+        $end = new DateTime($this->config['end']);
         $timestamp = rand($start->getTimestamp(), $end->getTimestamp());
         return date('Y-m-d', $timestamp);
     }
