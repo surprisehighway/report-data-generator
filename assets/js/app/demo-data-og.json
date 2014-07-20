@@ -1,0 +1,26 @@
+[
+	{
+		"id": 1,
+		"time": "2014-07-16",
+		"oldMembers": 37,
+		"newMembers": 75,
+		"transfers": 14,
+		"y": 50
+	},
+	{
+		"id": 2,
+		"time": "2014-07-02",
+		"oldMembers": 48,
+		"newMembers": 69,
+		"transfers": 74,
+		"y": 27
+	},
+	{
+		"id": 3,
+		"time": "2014-07-10",
+		"oldMembers": 7,
+		"newMembers": 24,
+		"transfers": 29,
+		"y": 39
+	}
+]
