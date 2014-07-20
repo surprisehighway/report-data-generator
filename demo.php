@@ -12,10 +12,39 @@
 
         <script src="/assets/js/libs/modernizr-2.6.2.min.js"></script>
         <script src="/assets/js/libs/jquery-1.11.1.min.js"></script>
+        <script src="/assets/js/libs/d3.min.js"></script>
+
+        <style>
+                .axis path,
+        .axis line {
+            fill: none;
+            stroke: black;
+            shape-rendering: crispEdges;
+        }
+
+        .axis text {
+            font-family: sans-serif;
+            font-size: 11px;
+        }
+
+        .dot {
+          stroke: #000;
+        }
+
+
+        .legend {
+                        padding: 5px;
+                        font: 10px sans-serif;
+                        background: yellow;
+                        box-shadow: 2px 2px 1px #888;
+                    }
+        </style>
     </head>
     <body>
 
-        <p>Hello world!</p>
+        <div>
+            <div id="mbars"></div>
+        </div>
 
         <script src="/assets/js/app/main.js"></script>
     </body>
