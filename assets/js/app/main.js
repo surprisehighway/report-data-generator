@@ -22,9 +22,17 @@ var stack = d3.layout.stack().values(function(d) { return d.values; });
 
 d3.json("/assets/js/app/demo-data.json",function(json){
 	dataset = json.groups;
-
 	dataRef = dataset[0].values;
-	//console.log(items.length);
+
+	var indices = d3.range(0, dataRef.length);
+
+	//Create an array of lables to be refrenced for our x axis.
+	var labels = [];
+	for(var i=0; i<dataRef.length; i++)  {
+		labels.push(dataRef[i].time);
+	}
+
+	console.log(labels);
 
 	var color_hash = {
 	    0 : ["Old Members","#1f77b4"],
@@ -38,9 +46,10 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 
 	// Set up scales
 	var xScale = d3.scale.ordinal()
-		.domain( dataRef.map( function(d) {
-			return d.time;
-		}))
+		// .domain( dataRef.map( function(d) {
+		// 	return d.time;
+		// }))
+		.domain(indices)
 		.rangeRoundBands([0, w-padding.left-padding.right], 0.1);
 
 	var yScale = d3.scale.linear()
@@ -53,16 +62,19 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 		])
 		.range([h-padding.bottom-padding.top,0]);
 
+
+	// Set up axis
 	var xAxis = d3.svg.axis()
 				   .scale(xScale)
 				   .orient("bottom")
-				   .ticks(xScale.rangeBand());
+				   .tickFormat(function(d){
+						return labels[d];
+				   });
 
 	var yAxis = d3.svg.axis()
 				   .scale(yScale)
 				   .orient("left")
 				   .ticks(15);
-
 
 
 	//Easy colors accessible via a 10-step ordinal scale
@@ -99,7 +111,7 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 			return 750 * i;
 	    })
 	    .ease("linear")
-		.attr("x", function(d) { return xScale(d.time); })
+		.attr("x", function(d, i) { return xScale(i); })
 		.attr("y", function(d) {
 			return -(- yScale(d.y0) - yScale(d.y) + (h - padding.top - padding.bottom)*2);
 		})
@@ -109,6 +121,7 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 		// .attr("width", 18) // disable width transition
 		.style("fill-opacity",1);
 
+	// add axis
 	svg.append("g")
 		.attr("class","x axis")
 		.attr("transform","translate(40," + (h - padding.bottom) + ")")
