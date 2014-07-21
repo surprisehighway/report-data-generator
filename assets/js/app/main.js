@@ -13,6 +13,7 @@ var Site = window.Site || {};
 
 var w = 600; //width
 var h = 600; //height
+var yTicks = 16;
 var padding = {top: 40, right: 100, bottom: 100, left:40};
 var dataset;
 var dataRef;
@@ -31,8 +32,6 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 	for(var i=0; i<dataRef.length; i++)  {
 		labels.push(dataRef[i].time);
 	}
-
-	console.log(labels);
 
 	var color_hash = {
 	    0 : ["Old Members","#1f77b4"],
@@ -74,7 +73,7 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 	var yAxis = d3.svg.axis()
 				   .scale(yScale)
 				   .orient("left")
-				   .ticks(15);
+				   .ticks(yTicks);
 
 
 	//Easy colors accessible via a 10-step ordinal scale
@@ -89,7 +88,7 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 	//Create grid lines
 	svg.append("g")
 		.attr("class", "y grid")
-		.selectAll("line.horizontalGrid").data(yScale.ticks(15)).enter()
+		.selectAll("line.horizontalGrid").data(yScale.ticks(16)).enter()
 		.append("line")
 			.attr({
 				"class":"horizontalGrid",
