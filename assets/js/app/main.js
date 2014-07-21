@@ -12,22 +12,19 @@ var Site = window.Site || {};
 })(jQuery);
 
 var w = 600; //width
-var h = 500; //height
-var padding = {top: 40, right: 40, bottom: 40, left:40};
+var h = 600; //height
+var padding = {top: 40, right: 40, bottom: 100, left:40};
 var dataset;
+var dataRef;
 
-//Set up stack method
+//Set up stack method,
 var stack = d3.layout.stack().values(function(d) { return d.values; });
 
 d3.json("/assets/js/app/demo-data.json",function(json){
 	dataset = json.groups;
 
-	var items = dataset[0].values;
-
-	console.log(items.length);
-
-	//Data, stacked
-	stack(dataset);
+	dataRef = dataset[0].values;
+	//console.log(items.length);
 
 	var color_hash = {
 	    0 : ["Old Members","#1f77b4"],
@@ -36,11 +33,15 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 		3 : ["Visitors","#ff0000"]
 	};
 
+	//Data, stacked
+	stack(dataset);
 
-	//Set up scales
-	var xScale = d3.scale.linear()
-		.domain([0, 1+items.length])
-		.rangeRound([0, w-padding.left-padding.right]);
+	// Set up scales
+	var xScale = d3.scale.ordinal()
+		.domain( dataRef.map( function(d) {
+			return d.time;
+		}))
+		.rangeRoundBands([0, w-padding.left-padding.right], 0.1);
 
 	var yScale = d3.scale.linear()
 		.domain([0,
@@ -55,12 +56,12 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 	var xAxis = d3.svg.axis()
 				   .scale(xScale)
 				   .orient("bottom")
-				   .ticks(10);
+				   .ticks(xScale.rangeBand());
 
 	var yAxis = d3.svg.axis()
 				   .scale(yScale)
 				   .orient("left")
-				   .ticks(10);
+				   .ticks(15);
 
 
 
@@ -89,7 +90,7 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 		.data(function(d) { return d.values; })
 		.enter()
 		.append("rect")
-		.attr("width", 18)
+		.attr("width", xScale.rangeBand())
 		.style("fill-opacity",1e-6);
 
 
@@ -98,9 +99,7 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 			return 750 * i;
 	    })
 	    .ease("linear")
-	    .attr("x", function(d) {
-			return xScale(d.x)-9;
-		})
+		.attr("x", function(d) { return xScale(d.time); })
 		.attr("y", function(d) {
 			return -(- yScale(d.y0) - yScale(d.y) + (h - padding.top - padding.bottom)*2);
 		})
@@ -113,7 +112,14 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 	svg.append("g")
 		.attr("class","x axis")
 		.attr("transform","translate(40," + (h - padding.bottom) + ")")
-		.call(xAxis);
+		.call(xAxis)
+		.selectAll("text")
+			.style("text-anchor", "end")
+			.attr("dx", "-.8em")
+			.attr("dy", ".15em")
+			.attr("transform", function(d) {
+				return "rotate(-65)";
+			});
 
 
 	svg.append("g")
