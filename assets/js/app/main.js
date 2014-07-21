@@ -13,7 +13,7 @@ var Site = window.Site || {};
 
 var w = 600; //width
 var h = 600; //height
-var padding = {top: 40, right: 40, bottom: 100, left:40};
+var padding = {top: 40, right: 100, bottom: 100, left:40};
 var dataset;
 var dataRef;
 
@@ -86,8 +86,25 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 		.attr("width", w)
 		.attr("height", h);
 
+	//Create grid lines
+	svg.append("g")
+		.attr("class", "y grid")
+		.selectAll("line.horizontalGrid").data(yScale.ticks(15)).enter()
+		.append("line")
+			.attr({
+				"class":"horizontalGrid",
+				"x1": padding.left,
+				"x2": w-padding.right,
+				"y1": function(d){ return yScale(d)+padding.top;},
+				"y2": function(d){ return yScale(d)+padding.top;},
+				"fill": "none",
+				"shape-rendering" : "crispEdges",
+				"stroke": "#c0c0c0",
+				"stroke-width": "1px"
+			});
+
 	// Add a group for each row of data
-	var groups = svg.selectAll("g")
+	var groups = svg.selectAll("g.rgroups")
 		.data(dataset)
 		.enter()
 		.append("g")
@@ -144,7 +161,7 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 
 	var legend = svg.append("g")
 		.attr("class","legend")
-		.attr("x", w - padding.right - 65)
+		.attr("x", w - 65)
 		.attr("y", 25)
 		.attr("height", 100)
 		.attr("width",100);
@@ -155,15 +172,15 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 		.each(function(d,i){
 			var g = d3.select(this);
 			g.append("rect")
-				.attr("x", w - padding.right - 65)
-				.attr("y", i*25 + 10)
+				.attr("x", w - 95)
+				.attr("y", i*25 + 40)
 				.attr("width", 10)
 				.attr("height",10)
 				.style("fill",color_hash[String(i)][1]);
 
 			g.append("text")
-			 .attr("x", w - padding.right - 50)
-			 .attr("y", i*25 + 20)
+			 .attr("x", w - 80)
+			 .attr("y", i*25 + 50)
 			 .attr("height",30)
 			 .attr("width",100)
 			 .style("fill",color_hash[String(i)][1])
