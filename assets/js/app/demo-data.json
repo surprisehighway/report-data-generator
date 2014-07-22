@@ -30,6 +30,13 @@
 			    	"total": 244,
 			    	"type": "Old Members",
 			        "y": 37
+			    },
+			    {
+			    	"id": 5,
+			    	"time": "2014-07-16",
+			    	"total": 0,
+			    	"type": "Old Members",
+			        "y": 0
 			    }
 			]
 		},
@@ -63,6 +70,13 @@
 			    	"total": 244,
 			    	"type": "New Members",
 			        "y": 69
+			    },
+			    {
+			    	"id": 5,
+			    	"time": "2014-07-16",
+			    	"total": 0,
+			    	"type": "New Members",
+			        "y": 0
 			    }
 			]
 		},
@@ -96,6 +110,20 @@
 			    	"total": 244,
 			    	"type": "Transfers",
 			        "y": 69
+			    },
+			    {
+			    	"id": 5,
+			    	"time": "2014-07-16",
+			    	"total": 0,
+			    	"type": "Transfers",
+			        "y": 0
+			    },
+			    {
+			    	"id": 5,
+			    	"time": "2014-07-16",
+			    	"total": 0,
+			    	"type": "Transfers",
+			        "y": 0
 			    }
 			]
 		},
@@ -106,25 +134,36 @@
 			    	"id": 2,
 			    	"time": "2014-07-02",
 			    	"total": 289,
+			    	"type": "Visitors",
 			        "y": 27
 			    },
 			    {
 			    	"id": 3,
 			    	"time": "2014-07-10",
 			    	"total": 704,
+			    	"type": "Visitors",
 			        "y": 176
 			    },
 			    {
 			    	"id": 1,
 			    	"time": "2014-07-16",
 			    	"total": 170,
+			    	"type": "Visitors",
 			        "y": 50
 			    },
 			    {
 			    	"id": 4,
 			    	"time": "2014-07-16",
 			    	"total": 244,
+			    	"type": "Visitors",
 			        "y": 69
+			    },
+			    {
+			    	"id": 5,
+			    	"time": "2014-07-16",
+			    	"total": 0,
+			    	"type": "Visitors",
+			        "y": 0
 			    }
 			]
 		}
