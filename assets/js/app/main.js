@@ -10,6 +10,14 @@ var Site = window.Site || {};
 // Create the tool tip placeholder
 var $tooltip = $('<div>').addClass('barchart-tooltip-wrap tooltip').hide().appendTo('body');
 
+var initTooltip = function(){
+	$('.chartTooltip').on('mousemove',function(e) {
+		var mousex = e.pageX - 100; //Get X coordinates
+		var mousey = e.pageY - 40; //Get Y coordinates
+		$tooltip.css({ top: mousey, left: mousex });
+	});
+};
+
 var w = 600; //Width
 var h = 600; //Height
 var yTicks = 16; //Ticks to display on Y Axis
@@ -74,7 +82,6 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 				   .orient("left")
 				   .ticks(yTicks);
 
-
 	//Easy colors accessible via a 10-step ordinal scale
 	var colors = d3.scale.category10();
 
@@ -120,14 +127,19 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 		.enter()
 		.append("rect")
 		.attr("width", xScale.rangeBand())
+		.attr("class", "chartTooltip")
 		.style("fill-opacity",1e-6)
 		.on("mouseover", function(d) {
-			console.log(d);
+			d3.select(this)
+				.style("fill-opacity",0.35);
 			$tooltip.html(_.template(Templates.chartTooltip, { d: d })).fadeIn(150);
 		})
 		.on("mouseout", function(d) {
+			d3.select(this)
+				.style("fill-opacity",1);
 			$tooltip.hide();
-		});
+		})
+		.call(initTooltip);
 
 	rects.transition()
 	    .duration(function(d,i){

@@ -37,6 +37,12 @@
             background: yellow;
             box-shadow: 2px 2px 1px #888;
         }
+
+        .tooltip {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
         </style>
     </head>
     <body>
