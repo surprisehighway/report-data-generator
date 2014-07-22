@@ -13,10 +13,10 @@
         <script src="/assets/js/libs/modernizr-2.6.2.min.js"></script>
         <script src="/assets/js/libs/jquery-1.11.1.min.js"></script>
         <script src="/assets/js/libs/d3.min.js"></script>
+        <script src="/assets/js/libs/underscore-min.js"></script>
 
         <style>
-                .axis path,
-        .axis line {
+        .axis path, .axis line {
             fill: none;
             stroke: black;
             shape-rendering: crispEdges;
@@ -31,13 +31,12 @@
           stroke: #000;
         }
 
-
         .legend {
-                        padding: 5px;
-                        font: 10px sans-serif;
-                        background: yellow;
-                        box-shadow: 2px 2px 1px #888;
-                    }
+            padding: 5px;
+            font: 10px sans-serif;
+            background: yellow;
+            box-shadow: 2px 2px 1px #888;
+        }
         </style>
     </head>
     <body>

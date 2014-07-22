@@ -2,18 +2,17 @@
 var Site = window.Site || {};
 
 (function($) {
-
 	$(document).ready(function() {
 
-		//alert('ready!');
-
 	});
-
 })(jQuery);
 
-var w = 600; //width
-var h = 600; //height
-var yTicks = 16;
+// Create the tool tip placeholder
+var $tooltip = $('<div>').addClass('barchart-tooltip-wrap tooltip').hide().appendTo('body');
+
+var w = 600; //Width
+var h = 600; //Height
+var yTicks = 16; //Ticks to display on Y Axis
 var padding = {top: 40, right: 100, bottom: 100, left:40};
 var dataset;
 var dataRef;
@@ -43,7 +42,7 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 	//Data, stacked
 	stack(dataset);
 
-	// Set up scales
+	//Set up scales
 	var xScale = d3.scale.ordinal()
 		// .domain( dataRef.map( function(d) {
 		// 	return d.time;
@@ -62,7 +61,7 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 		.range([h-padding.bottom-padding.top,0]);
 
 
-	// Set up axis
+	//Set up axis
 	var xAxis = d3.svg.axis()
 				   .scale(xScale)
 				   .orient("bottom")
@@ -102,6 +101,7 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 				"stroke-width": "1px"
 			});
 
+
 	// Add a group for each row of data
 	var groups = svg.selectAll("g.rgroups")
 		.data(dataset)
@@ -113,14 +113,21 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 			return color_hash[dataset.indexOf(d)][1];
 		});
 
+
 	// Add a rect for each data value
 	var rects = groups.selectAll("rect")
 		.data(function(d) { return d.values; })
 		.enter()
 		.append("rect")
 		.attr("width", xScale.rangeBand())
-		.style("fill-opacity",1e-6);
-
+		.style("fill-opacity",1e-6)
+		.on("mouseover", function(d) {
+			console.log(d);
+			$tooltip.html(_.template(Templates.chartTooltip, { d: d })).fadeIn(150);
+		})
+		.on("mouseout", function(d) {
+			$tooltip.hide();
+		});
 
 	rects.transition()
 	    .duration(function(d,i){
@@ -137,6 +144,7 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 		// .attr("width", 18) // disable width transition
 		.style("fill-opacity",1);
 
+
 	// add axis
 	svg.append("g")
 		.attr("class","x axis")
@@ -150,14 +158,13 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 				return "rotate(-65)";
 			});
 
-
 	svg.append("g")
 		.attr("class","y axis")
 		.attr("transform","translate(" + padding.left + "," + padding.top + ")")
 		.call(yAxis);
 
-	// adding legend
 
+	// adding legend
 	var legend = svg.append("g")
 		.attr("class","legend")
 		.attr("x", w - 65)
@@ -185,27 +192,19 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 			 .style("fill",color_hash[String(i)][1])
 			 .text(color_hash[String(i)][0]);
 		});
-
-	svg.append("text")
-		.attr("transform","rotate(-90)")
-		.attr("y", 0 - 5)
-		.attr("x", 0-(h/2))
-		.attr("dy","1em")
-		.text("Y Axis");
-
-	svg.append("text")
-	   .attr("class","xtext")
-	   .attr("x",w/2 - padding.left)
-	   .attr("y",h - 5)
-	   .attr("text-anchor","middle")
-	   .text("X Axis");
-
-	svg.append("text")
-	    .attr("class","title")
-	    .attr("x", (w / 2))
-	    .attr("y", 20)
-	    .attr("text-anchor", "middle")
-	    .style("font-size", "16px")
-	    .style("text-decoration", "underline")
-	    .text("Chart Title");
 });
+
+//Declare namespace for underscore templates.
+Templates = {};
+
+Templates.chartTooltip = [
+	'<div class="barchart-tooltip-container">',
+		'<p>On <strong><%= d.time %></strong> there were <strong><%= d.y %>  <%= d.type %></strong> out of <%= d.total %> attenders (<%= Templates.percent(d.y, d.total) %>%)</p>',
+	'</div>'
+].join('\n');
+
+//Calculate percentage.
+Templates.percent = function(val1, val2) {
+	var pcnt = (val1 / val2)*100;
+	return pcnt.toFixed(1);
+};

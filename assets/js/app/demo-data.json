@@ -1,101 +1,129 @@
 {
 	"groups": [
 		{
-			"type": "Old Members",
+			"group": "Old Members",
 			"values": [
 			    {
 			    	"id": 2,
 			    	"time": "2014-07-02",
+			    	"total": 289,
+			    	"type": "Old Members",
 			        "y": 48
 			    },
 			    {
 			    	"id": 3,
 			    	"time": "2014-07-10",
+			    	"total": 704,
+			    	"type": "Old Members",
 			        "y": 176
 			    },
 			    {
 			    	"id": 1,
 			    	"time": "2014-07-16",
+			    	"total": 170,
+			    	"type": "Old Members",
 			        "y": 37
 			    },
 			    {
 			    	"id": 4,
 			    	"time": "2014-07-16",
+			    	"total": 244,
+			    	"type": "Old Members",
 			        "y": 37
 			    }
 			]
 		},
 		{
-			"type": "New Members",
+			"group": "New Members",
 			"values": [
 			    {
 			    	"id": 2,
 			        "time": "2014-07-02",
+			        "total": 289,
+			        "type": "New Members",
 			        "y": 135
 			    },
 			    {
 			    	"id": 3,
 			    	"time": "2014-07-10",
+			    	"total": 704,
+			    	"type": "New Members",
 			        "y": 176
 			    },
 			    {
 			    	"id": 1,
 			    	"time": "2014-07-16",
+			    	"total": 170,
+			    	"type": "New Members",
 			        "y": 69
 			    },
 			    {
 			    	"id": 4,
 			    	"time": "2014-07-16",
+			    	"total": 244,
+			    	"type": "New Members",
 			        "y": 69
 			    }
 			]
 		},
 		{
-			"type": "Transfers",
+			"group": "Transfers",
 			"values": [
 			    {
 			    	"id": 2,
 			    	"time": "2014-07-02",
+			    	"total": 289,
+			    	"type": "Transfers",
 			        "y": 74
 			    },
 			    {
 			    	"id": 3,
 			    	"time": "2014-07-10",
+			    	"total": 704,
+			    	"type": "Transfers",
 			        "y": 176
 			    },
 			    {
 			    	"id": 1,
 			    	"time": "2014-07-16",
+			    	"total": 170,
+			    	"type": "Transfers",
 			        "y": 14
 			    },
 			    {
 			    	"id": 4,
 			    	"time": "2014-07-16",
+			    	"total": 244,
+			    	"type": "Transfers",
 			        "y": 69
 			    }
 			]
 		},
 		{
-			"type": "Visitors",
+			"group": "Visitors",
 			"values": [
 			    {
 			    	"id": 2,
 			    	"time": "2014-07-02",
+			    	"total": 289,
 			        "y": 27
 			    },
 			    {
 			    	"id": 3,
 			    	"time": "2014-07-10",
+			    	"total": 704,
 			        "y": 176
 			    },
 			    {
 			    	"id": 1,
 			    	"time": "2014-07-16",
+			    	"total": 170,
 			        "y": 50
 			    },
 			    {
 			    	"id": 4,
 			    	"time": "2014-07-16",
+			    	"total": 244,
 			        "y": 69
 			    }
 			]
