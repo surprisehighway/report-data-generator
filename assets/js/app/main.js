@@ -218,18 +218,18 @@ d3.json("http://local.report-generator.com/",function(json){
 
 	// Inject styles
 	// External CSS will not be rendered in image output
-	$('.axis path, .axis line').css({
+	d3.selectAll('.axis path, .axis line').style({
 		"fill" : "none",
 		"stroke" : "black",
 		"shape-rendering" : "crispEdges"
 	});
 
-	$('.axis text').css({
+	d3.selectAll('.axis text').style({
 		"font-family" : "arial",
 		"font-size" : "11px"
 	});
 
-	$('.legend').css({
+	d3.selectAll('.legend').style({
 		"padding": "5px",
 		"font-size": "10px",
 		"font-family": "arial",
@@ -238,24 +238,9 @@ d3.json("http://local.report-generator.com/",function(json){
 
 });
 
-//Declare namespace for underscore templates.
-Templates = {};
-
-Templates.chartTooltip = [
-	'<div class="barchart-tooltip-container">',
-		'<p>On <strong><%= d.time %></strong> there were <strong><%= d.y %>  <%= d.type %></strong> out of <%= d.total %> attenders (<%= Templates.percent(d.y, d.total) %>%)</p>',
-	'</div>'
-].join('\n');
-
-//Calculate percentage.
-Templates.percent = function(val1, val2) {
-	var pcnt = (val1 / val2)*100;
-	return pcnt.toFixed(1);
-};
 
 //SVG Export
-d3.select("#save").on("click", function(){
-
+function exportPNG(){
 	var svghtml = d3.select("svg")
         .attr("version", 1.1)
         .attr("background-color", "#ffffff")
@@ -274,8 +259,8 @@ d3.select("#save").on("click", function(){
 
 		var canvasdata = canvas.toDataURL("image/png");
 
-		var pngimg = '<img src="'+canvasdata+'">';
-
+		//Insert png as image src
+		//var pngimg = '<img src="'+canvasdata+'">';
 		//d3.select("#pngdataurl").html(pngimg);
 
 		var a = document.createElement("a");
@@ -284,5 +269,24 @@ d3.select("#save").on("click", function(){
 
 		a.click();
   };
+}
 
-});
+d3.select("#save").on("click", exportPNG);
+
+
+//Declare namespace for underscore templates.
+Templates = {};
+
+Templates.chartTooltip = [
+	'<div class="barchart-tooltip-container">',
+		'<p>On <strong><%= d.time %></strong> there were <strong><%= d.y %>  <%= d.type %></strong> out of <%= d.total %> attenders (<%= Templates.percent(d.y, d.total) %>%)</p>',
+	'</div>'
+].join('\n');
+
+//Calculate percentage.
+Templates.percent = function(val1, val2) {
+	var pcnt = (val1 / val2)*100;
+	return pcnt.toFixed(1);
+};
+
+
