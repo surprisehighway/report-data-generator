@@ -16,40 +16,43 @@
         <script src="/assets/js/libs/underscore-min.js"></script>
 
         <style>
-        .axis path, .axis line {
-            fill: none;
-            stroke: black;
-            shape-rendering: crispEdges;
-        }
+            /* SVG specific styling must be introduced via D3 or Javascript */
+            /*.axis path, .axis line {
+                fill: none;
+                stroke: black;
+                shape-rendering: crispEdges;
+            }*/
 
-        .axis text {
-            font-family: sans-serif;
-            font-size: 11px;
-        }
+            /*.axis text {
+                font-family: sans-serif;
+                font-size: 11px;
+            }*/
 
-        .dot {
-          stroke: #000;
-        }
+            /*.legend {
+                padding: 5px;
+                font: 10px sans-serif;
+                background: yellow;
+                box-shadow: 2px 2px 1px #888;
+            }*/
 
-        .legend {
-            padding: 5px;
-            font: 10px sans-serif;
-            background: yellow;
-            box-shadow: 2px 2px 1px #888;
-        }
+            .tooltip {
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
 
-        .tooltip {
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
+            #export { display: none; }
+
         </style>
     </head>
     <body>
 
-        <div>
-            <div id="mbars"></div>
+        <div id="mbars" style="background-color: white;">
         </div>
+
+        <button id="save">Save as Image</button>
+
+        <canvas width="600" height="600" id="export"></canvas>
 
         <script src="/assets/js/app/main.js"></script>
     </body>

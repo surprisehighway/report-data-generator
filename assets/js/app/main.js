@@ -91,6 +91,16 @@ d3.json("http://local.report-generator.com/",function(json){
 		.attr("width", w)
 		.attr("height", h);
 
+	//Create a backdrop
+	svg.append("g")
+		.attr("class", "background")
+		.append("rect")
+			.attr("x", 0)
+			.attr("y", 0)
+			.attr("width", w)
+			.attr("height", h)
+			.attr("fill", '#ffffff');
+
 	//Create grid lines
 	svg.append("g")
 		.attr("class", "y grid")
@@ -197,13 +207,34 @@ d3.json("http://local.report-generator.com/",function(json){
 				.style("fill",color_hash[String(i)][1]);
 
 			g.append("text")
-			 .attr("x", w - 80)
-			 .attr("y", i*25 + 50)
-			 .attr("height",30)
-			 .attr("width",100)
-			 .style("fill",color_hash[String(i)][1])
-			 .text(color_hash[String(i)][0]);
+				.attr("class", "legend-text")
+				.attr("x", w - 80)
+				.attr("y", i*25 + 50)
+				.attr("height",30)
+				.attr("width",100)
+				.style("fill",color_hash[String(i)][1])
+				.text(color_hash[String(i)][0]);
 		});
+
+	// Inject styles
+	// External CSS will not be rendered in image output
+	$('.axis path, .axis line').css({
+		"fill" : "none",
+		"stroke" : "black",
+		"shape-rendering" : "crispEdges"
+	});
+
+	$('.axis text').css({
+		"font-family" : "sans-serif",
+		"font-size" : "11px"
+	});
+
+	$('.legend').css({
+		"padding" : "5px",
+		"font-size" : "10px",
+		"box-shadow": "2px 2px 1px #888"
+	});
+
 });
 
 //Declare namespace for underscore templates.
@@ -220,3 +251,37 @@ Templates.percent = function(val1, val2) {
 	var pcnt = (val1 / val2)*100;
 	return pcnt.toFixed(1);
 };
+
+//SVG Export
+d3.select("#save").on("click", function(){
+
+	var svghtml = d3.select("svg")
+        .attr("version", 1.1)
+        .attr("background-color", "#ffffff")
+        .attr("xmlns", "http://www.w3.org/2000/svg")
+        .node().parentNode.innerHTML;
+
+	var imgsrc = 'data:image/svg+xml;base64,'+ btoa(svghtml);
+	var canvas = document.querySelector("canvas"),
+		context = canvas.getContext("2d");
+
+	var image = new Image();
+		image.src = imgsrc;
+
+	image.onload = function() {
+		context.drawImage(image, 0, 0);
+
+		var canvasdata = canvas.toDataURL("image/png");
+
+		var pngimg = '<img src="'+canvasdata+'">';
+
+		//d3.select("#pngdataurl").html(pngimg);
+
+		var a = document.createElement("a");
+			a.download = "chart.png";
+			a.href = canvasdata;
+
+		a.click();
+  };
+
+});
