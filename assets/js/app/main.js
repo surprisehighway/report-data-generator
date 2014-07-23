@@ -8,12 +8,12 @@ var Site = window.Site || {};
 })(jQuery);
 
 // Create the tool tip placeholder
-var $tooltip = $('<div>').addClass('barchart-tooltip-wrap tooltip').hide().appendTo('body');
+var $tooltip = $('<div>').addClass('barchart-tooltip-wrap tooltip').appendTo('body').hide();
 
 var initTooltip = function(){
 	$('.chartTooltip').on('mousemove',function(e) {
 		var mousex = e.pageX - 100; //Get X coordinates
-		var mousey = e.pageY - 40; //Get Y coordinates
+		var mousey = e.pageY - 70; //Get Y coordinates
 		$tooltip.css({ top: mousey, left: mousex });
 	});
 };
@@ -41,10 +41,10 @@ d3.json("http://local.report-generator.com/",function(json){
 	}
 
 	var color_hash = {
-	    0 : ["Old Members","#1f77b4"],
-		1 : ["New Members","#2ca02c"],
-		2 : ["Transfers","#ff7f0e"],
-		3 : ["Visitors","#ff0000"]
+	    0 : ["Old Members","#fa6420"],
+		1 : ["New Members","#fbd130"],
+		2 : ["Transfers","#1b91cc"],
+		3 : ["Visitors","#2b20c9"]
 	};
 
 	//Data, stacked

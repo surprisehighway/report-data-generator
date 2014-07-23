@@ -35,10 +35,18 @@
                 box-shadow: 2px 2px 1px #888;
             }*/
 
-            .tooltip {
+            .barchart-tooltip-wrap {
+                height: 50px;
+                width: 200px;
+                padding: 5px 10px;
                 position: absolute;
                 top: 0;
                 left: 0;
+                border: 1px solid #c0c0c0;
+                border-radius: 4px;
+                box-shadow: 4px 4px 6px 0px rgba(0,0,0,0.35);
+                background-color: #fff;
+                font-size: 11px;
             }
 
             #export { display: none; }
