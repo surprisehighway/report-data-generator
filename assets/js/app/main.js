@@ -225,13 +225,14 @@ d3.json("http://local.report-generator.com/",function(json){
 	});
 
 	$('.axis text').css({
-		"font-family" : "sans-serif",
+		"font-family" : "arial",
 		"font-size" : "11px"
 	});
 
 	$('.legend').css({
-		"padding" : "5px",
-		"font-size" : "10px",
+		"padding": "5px",
+		"font-size": "10px",
+		"font-family": "arial",
 		"box-shadow": "2px 2px 1px #888"
 	});
 
