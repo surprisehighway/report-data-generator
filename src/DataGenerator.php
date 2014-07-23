@@ -12,7 +12,7 @@ class DataGenerator {
     public function generate()
     {
         $numEvents = $this->config['numberEvents'];
-        $groups = 4;
+        $groups = 5;
         $data = [];
 
         //Create a reference to dummy entries
@@ -35,9 +35,12 @@ class DataGenerator {
                     $events->group = "New Members";
                     break;
                 case 3:
-                    $events->group = "Transfers";
+                    $events->group = "First Timers";
                     break;
                 case 4:
+                    $events->group = "Transfers";
+                    break;
+                case 5:
                     $events->group = "Visitors";
                     break;
             }

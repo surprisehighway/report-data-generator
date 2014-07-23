@@ -43,8 +43,9 @@ d3.json("http://local.report-generator.com/",function(json){
 	var color_hash = {
 	    0 : ["Old Members","#fa6420"],
 		1 : ["New Members","#fbd130"],
-		2 : ["Transfers","#1b91cc"],
-		3 : ["Visitors","#2b20c9"]
+		2 : ["First Timers","#b2dc30"],
+		3 : ["Transfers","#1b91cc"],
+		4 : ["Visitors","#2b20c9"]
 	};
 
 	//Data, stacked
@@ -209,7 +210,7 @@ d3.json("http://local.report-generator.com/",function(json){
 			g.append("text")
 				.attr("class", "legend-text")
 				.attr("x", w - 80)
-				.attr("y", i*25 + 50)
+				.attr("y", i*25 + 49)
 				.attr("height",30)
 				.attr("width",100)
 				.style("fill",color_hash[String(i)][1])
@@ -220,7 +221,7 @@ d3.json("http://local.report-generator.com/",function(json){
 	// External CSS will not be rendered in image output
 	d3.selectAll('.axis path, .axis line').style({
 		"fill" : "none",
-		"stroke" : "black",
+		"stroke" : "#000000",
 		"shape-rendering" : "crispEdges"
 	});
 
@@ -232,10 +233,12 @@ d3.json("http://local.report-generator.com/",function(json){
 	d3.selectAll('.legend').style({
 		"padding": "5px",
 		"font-size": "10px",
-		"font-family": "arial",
-		"box-shadow": "2px 2px 1px #888"
+		"font-family": "arial"
 	});
 
+	d3.selectAll('.legend-text').style({
+		"fill" : "#000000"
+	});
 });
 
 
