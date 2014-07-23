@@ -28,7 +28,7 @@ var dataRef;
 //Set up stack method,
 var stack = d3.layout.stack().values(function(d) { return d.values; });
 
-d3.json("/assets/js/app/demo-data.json",function(json){
+d3.json("http://local.report-generator.com/",function(json){
 	dataset = json.groups;
 	dataRef = dataset[0].values;
 
@@ -143,7 +143,7 @@ d3.json("/assets/js/app/demo-data.json",function(json){
 
 	rects.transition()
 	    .duration(function(d,i){
-			return 750 * i;
+			return 75 * i;
 	    })
 	    .ease("linear")
 		.attr("x", function(d, i) { return xScale(i); })
