@@ -54,9 +54,6 @@ d3.json("http://local.report-generator.com/assets/js/app/demo-data-2.json",funct
 
 	//Set up scales
 	var xScale = d3.scale.ordinal()
-		// .domain( dataRef.map( function(d) {
-		// 	return d.time;
-		// }))
 		.domain(indices)
 		.rangeRoundBands([0, w-padding.left-padding.right], 0.1);
 
