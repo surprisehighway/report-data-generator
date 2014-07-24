@@ -160,18 +160,10 @@ d3.json("http://local.report-generator.com/assets/js/app/demo-data-2.json",funct
 	    .ease("linear")
 		.attr("x", function(d, i) { return xScale(i); })
 		.attr("y", function(d) {
-			if ( d.total === 0 && d.type == "Old Members" ) {
-				return -(h - padding.top - padding.bottom);
-			} else {
-				return -(- yScale(d.y0) - yScale(d.y) + (h - padding.top - padding.bottom)*2);
-			}
+			return -(- yScale(d.y0) - yScale(d.y) + (h - padding.top - padding.bottom)*2);
 		})
 		.attr("height", function(d) {
-			if ( d.total === 0 && d.type == "Old Members" ) {
-				return h - padding.top - padding.bottom;
-			} else {
-				return -yScale(d.y) + (h - padding.top - padding.bottom);
-			}
+			return -yScale(d.y) + (h - padding.top - padding.bottom);
 		})
 		.attr("width", xScale.rangeBand()) // disable width transition
 		.style("fill-opacity",1);
