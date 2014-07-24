@@ -139,16 +139,26 @@ d3.json("http://local.report-generator.com/assets/js/app/demo-data-2.json",funct
 		.enter()
 		.append("rect")
 		.attr("width", 0)
-		.attr("class", "chartTooltip")
-		.style("fill-opacity",1e-6)
+		.attr("class", function(d) {
+			if (d.total > 0) {
+				return "chartTooltip";
+			} else {
+				return "chartTooltip zero-attnd";
+			}
+		})
+		.style(function(d){
+			if (d.total > 0) {
+				return "fill-opacity", 1e-6;
+			} else {
+				return "fill-opacity", 0;
+			}
+		})
 		.on("mouseover", function(d) {
-			d3.select(this)
-				.style("fill-opacity",0.35);
+			if (d.total > 0) d3.select(this).style("fill-opacity", 0.35);
 			$tooltip.html(_.template(Templates.chartTooltip, { d: d })).fadeIn(150);
 		})
 		.on("mouseout", function(d) {
-			d3.select(this)
-				.style("fill-opacity",1);
+			if (d.total > 0) d3.select(this).style("fill-opacity", 1);
 			$tooltip.hide();
 		})
 		.call(initTooltip);
@@ -160,13 +170,27 @@ d3.json("http://local.report-generator.com/assets/js/app/demo-data-2.json",funct
 	    .ease("linear")
 		.attr("x", function(d, i) { return xScale(i); })
 		.attr("y", function(d) {
-			return -(- yScale(d.y0) - yScale(d.y) + (h - padding.top - padding.bottom)*2);
+			if ( d.total === 0 && d.type == "Old Members" ) {
+				return -(h - padding.top - padding.bottom);
+			} else {
+				return -(- yScale(d.y0) - yScale(d.y) + (h - padding.top - padding.bottom)*2);
+			}
 		})
 		.attr("height", function(d) {
-			return -yScale(d.y) + (h - padding.top - padding.bottom);
+			if ( d.total === 0 && d.type == "Old Members" ) {
+				return h - padding.top - padding.bottom;
+			} else {
+				return -yScale(d.y) + (h - padding.top - padding.bottom);
+			}
 		})
 		.attr("width", xScale.rangeBand()) // disable width transition
-		.style("fill-opacity",1);
+		.style(function(d){
+			if (d.total > 0) {
+				return "fill-opacity", 1;
+			} else {
+				return "fill-opacity", 0;
+			}
+		});
 
 
 	// add axis
@@ -220,15 +244,24 @@ d3.json("http://local.report-generator.com/assets/js/app/demo-data-2.json",funct
 
 	// Inject styles
 	// External CSS will not be rendered in image output
+
+	d3.selectAll('rect.zero-attnd') //Hide "false" column for zero attenance
+		.attr('fill', '#ffffff')
+		.style({
+			"fill-opacity": 0,
+			"font-family": "arial",
+			"font-size": "11px"
+		});
+
 	d3.selectAll('.axis path, .axis line').style({
-		"fill" : "none",
-		"stroke" : "#000000",
-		"shape-rendering" : "crispEdges"
+		"fill": "none",
+		"stroke": "#000000",
+		"shape-rendering": "crispEdges"
 	});
 
 	d3.selectAll('.axis text').style({
-		"font-family" : "arial",
-		"font-size" : "11px"
+		"font-family": "arial",
+		"font-size": "11px"
 	});
 
 	d3.selectAll('.legend').style({
@@ -238,7 +271,7 @@ d3.json("http://local.report-generator.com/assets/js/app/demo-data-2.json",funct
 	});
 
 	d3.selectAll('.legend-text').style({
-		"fill" : "#000000"
+		"fill": "#000000"
 	});
 });
 
@@ -282,9 +315,13 @@ d3.select("#save").on("click", exportPNG);
 Templates = {};
 
 Templates.chartTooltip = [
-	'<div class="barchart-tooltip-container">',
-		'<p>On <strong><%= d.time %></strong> there were <strong><%= d.y %>  <%= d.type %></strong> out of <%= d.total %> attenders (<%= Templates.percent(d.y, d.total) %>%)</p>',
-	'</div>'
+	'<% if (d.total > 0) { %>',
+		'<div class="barchart-tooltip-container">',
+			'<p>On <strong><%= d.time %></strong> there were <strong><%= d.y %>  <%= d.type %></strong> out of <%= d.total %> attenders (<%= Templates.percent(d.y, d.total) %>%)</p>',
+		'</div>',
+	'<% } else { %>',
+		'<p>There were no attendees for <strong><%= d.time %></strong></p>',
+	'<% } %>'
 ].join('\n');
 
 //Calculate percentage.
