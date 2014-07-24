@@ -35,6 +35,8 @@
                 box-shadow: 2px 2px 1px #888;
             }*/
 
+            body{ padding: 20px;}
+
             .barchart-tooltip-wrap {
                 height: 50px;
                 width: 200px;
@@ -55,6 +57,15 @@
     </head>
     <body>
 
+        <div>
+            Number of Events:
+            <input type="number" min="1" value="30" name="events">
+            Number of Groups:
+            <input type="number" min="1" max="5" value="5" name="groups">
+            <button id="draw-chart">Draw Chart</button>
+        </div>
+
+
         <div id="stacked-chart-container">
         </div>
 
@@ -67,14 +78,21 @@
             (function($) {
                 $(document).ready(function() {
                     //Call our stacked chart.
-                    Chart.stackedChart('http://local.report-generator.com/');
+                    Chart.stackedChart('http://local.report-generator.com/?events=30&groups=5');
 
                     $("#save").on("click", function(){
                         Chart.exportPNG();
                     });
 
                     $(window).on("resize", function() {
-                      Chart.resize();
+                        Chart.resize();
+                    });
+
+                    $("#draw-chart").on("click", function() {
+                        var events = $("input[name=events]").val();
+                        var groups = $("input[name=groups]").val();
+                        Chart.clear();
+                        Chart.stackedChart("http://local.report-generator.com/?events="+events+"&groups="+groups+"");
                     });
 
                 });

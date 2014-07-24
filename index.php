@@ -3,7 +3,8 @@
 require 'vendor/autoload.php';
 
 $config = [
-    'numberEvents' => 30,
+    'numberEvents' => ( isset($_GET["events"]) ? $_GET["events"] : 30 ),
+    'groups' => ( isset($_GET["groups"]) && $_GET["groups"] <= 5 ? $_GET["groups"] : 5 ),
     'start' => date('Y-m-01'),
     'end' => date('Y-m-t')
 ];
