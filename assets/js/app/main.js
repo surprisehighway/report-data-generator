@@ -28,7 +28,7 @@ var dataRef;
 //Set up stack method,
 var stack = d3.layout.stack().values(function(d) { return d.values; });
 
-d3.json("http://local.report-generator.com/",function(json){
+d3.json("http://local.report-generator.com/assets/js/app/demo-data-2.json",function(json){
 	dataset = json.groups;
 	dataRef = dataset[0].values;
 
@@ -47,6 +47,7 @@ d3.json("http://local.report-generator.com/",function(json){
 		3 : ["Transfers","#1b91cc"],
 		4 : ["Visitors","#2b20c9"]
 	};
+
 
 	//Data, stacked
 	stack(dataset);
@@ -137,7 +138,7 @@ d3.json("http://local.report-generator.com/",function(json){
 		.data(function(d) { return d.values; })
 		.enter()
 		.append("rect")
-		.attr("width", xScale.rangeBand())
+		.attr("width", 0)
 		.attr("class", "chartTooltip")
 		.style("fill-opacity",1e-6)
 		.on("mouseover", function(d) {
@@ -159,12 +160,20 @@ d3.json("http://local.report-generator.com/",function(json){
 	    .ease("linear")
 		.attr("x", function(d, i) { return xScale(i); })
 		.attr("y", function(d) {
-			return -(- yScale(d.y0) - yScale(d.y) + (h - padding.top - padding.bottom)*2);
+			if ( d.total === 0 && d.type == "Old Members" ) {
+				return -(h - padding.top - padding.bottom);
+			} else {
+				return -(- yScale(d.y0) - yScale(d.y) + (h - padding.top - padding.bottom)*2);
+			}
 		})
 		.attr("height", function(d) {
-			return -yScale(d.y) + (h - padding.top - padding.bottom);
+			if ( d.total === 0 && d.type == "Old Members" ) {
+				return h - padding.top - padding.bottom;
+			} else {
+				return -yScale(d.y) + (h - padding.top - padding.bottom);
+			}
 		})
-		// .attr("width", 18) // disable width transition
+		.attr("width", xScale.rangeBand()) // disable width transition
 		.style("fill-opacity",1);
 
 
