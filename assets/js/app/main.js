@@ -28,26 +28,28 @@ var dataRef;
 //Set up stack method,
 var stack = d3.layout.stack().values(function(d) { return d.values; });
 
-d3.json("http://local.report-generator.com/assets/js/app/demo-data-2.json",function(json){
+d3.json("http://local.report-generator.com/",function(json){
 	dataset = json.groups;
 	dataRef = dataset[0].values;
 
 	var indices = d3.range(0, dataRef.length);
+
+
+	//Determine our group names and specify associated colors
+	dataGroups = {};
+	var colors = d3.scale.category10();
+
+	dataset.forEach(function (d, i) {
+		dataGroups[i] = [];
+		dataGroups[i][0] = d.group;
+		dataGroups[i][1] = colors(i);
+	});
 
 	//Create an array of lables to be refrenced for our x axis.
 	var labels = [];
 	for(var i=0; i<dataRef.length; i++)  {
 		labels.push(dataRef[i].time);
 	}
-
-	var color_hash = {
-	    0 : ["Old Members","#fa6420"],
-		1 : ["New Members","#fbd130"],
-		2 : ["First Timers","#b2dc30"],
-		3 : ["Transfers","#1b91cc"],
-		4 : ["Visitors","#2b20c9"]
-	};
-
 
 	//Data, stacked
 	stack(dataset);
@@ -80,9 +82,6 @@ d3.json("http://local.report-generator.com/assets/js/app/demo-data-2.json",funct
 				   .scale(yScale)
 				   .orient("left")
 				   .ticks(yTicks);
-
-	//Easy colors accessible via a 10-step ordinal scale
-	var colors = d3.scale.category10();
 
 	//Create SVG element
 	var svg = d3.select("#mbars")
@@ -126,7 +125,7 @@ d3.json("http://local.report-generator.com/assets/js/app/demo-data-2.json",funct
 		.attr("class", "rgroups")
 		.attr("transform","translate("+ padding.left + "," + (h - padding.bottom) +")")
 		.style("fill", function(d, i) {
-			return color_hash[dataset.indexOf(d)][1];
+			return dataGroups[dataset.indexOf(d)][1];
 		});
 
 
@@ -227,7 +226,7 @@ d3.json("http://local.report-generator.com/assets/js/app/demo-data-2.json",funct
 				.attr("y", i*25 + 40)
 				.attr("width", 10)
 				.attr("height",10)
-				.style("fill",color_hash[String(i)][1]);
+				.style("fill",dataGroups[String(i)][1]);
 
 			g.append("text")
 				.attr("class", "legend-text")
@@ -235,8 +234,8 @@ d3.json("http://local.report-generator.com/assets/js/app/demo-data-2.json",funct
 				.attr("y", i*25 + 49)
 				.attr("height",30)
 				.attr("width",100)
-				.style("fill",color_hash[String(i)][1])
-				.text(color_hash[String(i)][0]);
+				.style("fill",dataGroups[String(i)][1])
+				.text(dataGroups[String(i)][0]);
 		});
 
 	// Inject styles
