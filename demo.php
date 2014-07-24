@@ -55,7 +55,7 @@
     </head>
     <body>
 
-        <div id="stacked-chart">
+        <div id="stacked-chart-container">
         </div>
 
         <button id="save">Save as Image</button>
@@ -71,6 +71,10 @@
 
                     $("#save").on("click", function(){
                         Chart.exportPNG();
+                    });
+
+                    $(window).on("resize", function() {
+                      Chart.resize();
                     });
 
                 });

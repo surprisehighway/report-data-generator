@@ -10,10 +10,12 @@
 	var padding = {top: 40, right: 100, bottom: 100, left:40};
 
 	//Create SVG element
-	var svg = d3.select("#stacked-chart")
+	var svg = d3.select("#stacked-chart-container")
 		.append("svg")
 		.attr("width", w)
-		.attr("height", h);
+		.attr("height", h)
+		.attr("viewBox", "0 0 "+w+" "+h)
+		.attr("id", "stacked-chart");
 
 	//Set up stack method,
 	var stack = d3.layout.stack().values(function(d) { return d.values; });
@@ -324,6 +326,14 @@
 	Chart.templates.percent = function(val1, val2) {
 		var pcnt = (val1 / val2)*100;
 		return pcnt.toFixed(1);
+	};
+
+	Chart.resize = function () {
+	    var aspect = w / h;
+	    var chart = $("#stacked-chart");
+	    var targetWidth = chart.parent().width();
+	    chart.attr("width", targetWidth);
+	    chart.attr("height", targetWidth / aspect);
 	};
 
 	window.Chart = Chart;
