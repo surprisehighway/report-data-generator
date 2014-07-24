@@ -55,7 +55,7 @@
     </head>
     <body>
 
-        <div id="mbars" style="background-color: white;">
+        <div id="stacked-chart">
         </div>
 
         <button id="save">Save as Image</button>
@@ -63,5 +63,18 @@
         <canvas width="600" height="600" id="export"></canvas>
 
         <script src="/assets/js/app/main.js"></script>
+        <script type="text/javascript">
+            (function($) {
+                $(document).ready(function() {
+                    //Call our stacked chart.
+                    Chart.stackedChart('http://local.report-generator.com/');
+
+                    $("#save").on("click", function(){
+                        Chart.exportPNG();
+                    });
+
+                });
+            })(jQuery);
+        </script>
     </body>
 </html>
