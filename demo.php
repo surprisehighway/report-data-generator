@@ -71,7 +71,7 @@
 
         <button id="save">Save as Image</button>
 
-        <canvas width="600" height="600" id="export"></canvas>
+        <canvas width="1080" height="600" id="export"></canvas>
 
         <script src="/assets/js/app/main.js"></script>
         <script type="text/javascript">
@@ -85,7 +85,7 @@
                     });
 
                     $(window).on("resize", function() {
-                        Chart.resize();
+                        //Chart.resize();
                     });
 
                     $("#draw-chart").on("click", function() {

@@ -4,7 +4,7 @@
 	var Chart = {};
 	Chart.dataset = null;
 
-	var w = 600; //Width
+	var w = 1080; //Width
 	var h = 600; //Height
 	var yTicks = 16; //Ticks to display on Y Axis
 	var padding = {top: 40, right: 100, bottom: 100, left:40};
